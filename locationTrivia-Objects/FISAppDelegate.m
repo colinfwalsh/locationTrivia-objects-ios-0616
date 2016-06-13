@@ -32,27 +32,44 @@
     }
 }
 -(NSArray*)locationsNearLatitude:(CGFloat)latitude longitude:(CGFloat)longitude margin:(CGFloat)margin{
-    [self locationNamed:(@"Flatiron School")];
-    [self locationNamed: (@"Statue of Liberty")];
-    [self locationNamed:(@"Empire State Building")];
+//      WRONG IMPLEMENTATION
+//    [self locationNamed:(@"Flatiron School")];
+//    [self locationNamed: (@"Statue of Liberty")];
+//    [self locationNamed:(@"Empire State Building")];
+//    
+//    NSMutableArray* nearbyLocations = [[NSMutableArray alloc]init];
+//    
+//    if (margin == 0){
+//        [nearbyLocations addObject:[self locationNamed:(@"Flatiron School")]];
+//        return nearbyLocations;
+//    }
+//    else if (margin < .05){
+//        [nearbyLocations addObject:[self locationNamed:(@"Flatiron School")]];
+//        [nearbyLocations addObject:[self locationNamed: (@"Statue of Liberty")]];
+//        return nearbyLocations;}
+//    else if (margin >= .05){
+//        [nearbyLocations addObject:[self locationNamed:(@"Flatiron School")]];
+//        [nearbyLocations addObject:[self locationNamed: (@"Statue of Liberty")]];
+//        [nearbyLocations addObject:[self locationNamed:(@"Empire State Building")]];
+//
+//        return nearbyLocations;
+//    }
+//    return nil;
+//}
+    CGFloat maxLatLocation = latitude + margin;
+    CGFloat minLatLocation = latitude - margin;
+    CGFloat maxLongLocation = longitude + margin;
+    CGFloat minLongLocation = longitude - margin;
     
-    NSMutableArray* nearbyLocations = [[NSMutableArray alloc]init];
+    NSMutableArray* locationsWithinRange = [[NSMutableArray alloc]init];
     
-    if (margin == 0){
-        [nearbyLocations addObject:[self locationNamed:(@"Flatiron School")]];
-        return nearbyLocations;
+    for (FISLocation* location in self.locations) {
+        if ((location.latitude >= minLatLocation && location.latitude <= maxLatLocation) && (location.longitude >= minLongLocation && location.longitude <= maxLongLocation)){
+            [locationsWithinRange addObject:location];}
     }
-    else if (margin < .05){
-        [nearbyLocations addObject:[self locationNamed:(@"Flatiron School")]];
-        [nearbyLocations addObject:[self locationNamed: (@"Statue of Liberty")]];
-        return nearbyLocations;}
-    else if (margin >= .05){
-        [nearbyLocations addObject:[self locationNamed:(@"Flatiron School")]];
-        [nearbyLocations addObject:[self locationNamed: (@"Statue of Liberty")]];
-        [nearbyLocations addObject:[self locationNamed:(@"Empire State Building")]];
+    
+    
 
-        return nearbyLocations;
-    }
-    return nil;
+    return locationsWithinRange;
 }
 @end
